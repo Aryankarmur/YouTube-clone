@@ -1,0 +1,128 @@
+.play-video {
+  flex-basis: 69%;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+
+.video-details .video-div video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.video-details h3 {
+  margin-top: 10px;
+  font-weight: 600px;
+  font-size: 20px;
+  line-height: 1.8rem;
+}
+
+.video-details .other-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.video-details .other-detail .chanel-detail {
+  display: flex;
+  align-items: center;
+}
+.video-details .other-detail .chanel-detail .channel-img img {
+  width: 40px;
+  border-radius: 50%;
+}
+.video-details .other-detail .chanel-detail .channel-name-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  line-height: 20px;
+  margin-right: 24px;
+}
+.video-details .other-detail .chanel-detail .channel-name-sub p {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f0f0f;
+}
+.video-details .other-detail .chanel-detail .channel-name-sub p span {
+  /* margin-left: 10px; */
+  font-size: 12px;
+  font-weight: 400;
+  color: #606060;
+}
+.video-details .other-detail .chanel-detail button {
+  padding-inline: 16px;
+  height: 40px;
+  font-size: 14px;
+  line-height: 40px;
+  border: none;
+  border-radius: 20px;
+  background: #0f0f0f;
+  color: #f1f1f1;
+}
+.video-details .other-detail .likes-share-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+}
+.video-details .other-detail .likes-share-details div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.082);
+  padding-inline: 15px;
+  padding-block: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.video-details .other-detail .likes-share-details img {
+  width: 20px;
+  margin-right: 7px;
+}
+.video-details .other-detail .likes-share-details .likes-detail {
+  display: flex;
+  gap: 15px;
+  padding-block: 5px;
+}
+.video-details
+  .other-detail
+  .likes-share-details
+  .likes-detail
+  img:first-child {
+  margin-right: -10px;
+}
+.video-details .other-detail .likes-share-details .likes-detail hr {
+  height: 30px;
+}
+
+/* description css */
+
+.video-details .video-description {
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.11);
+  padding: 10px;
+  line-height: 22px;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+.video-details .video-description .view-detail {
+  display: inline-flex;
+  gap: 8px;
+  color: #0f0f0f;
+  font-weight: 550;
+}
+.video-details .video-description .description .more {
+  color: #0f0f0f;
+  font-weight: 550;
+}
+
+@media (max-width: 1040px) {
+  .play-video {
+    flex-basis: 100%;
+    padding-right: 10px;
+  }
+}

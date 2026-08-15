@@ -1,0 +1,10 @@
+.video-container{
+    display: flex;
+}
+
+
+@media (max-width: 1040px) {
+  .video-container{
+    display: block;
+}
+}
