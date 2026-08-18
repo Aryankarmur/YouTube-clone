@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./RelatedVideo.css";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { valueConverter } from "../../utils/helper";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
+const INITIAL_DISPLAY_COUNT = 8;
+
 const RelatedVideo = ({ relatedVideos, width }) => {
+  const [showAll, setShowAll] = useState(false);
+
+  // Reset showAll when viewport crosses above 1040px
+  // (desktop shows all videos by default in the sidebar layout)
+  useEffect(() => {
+    if (width >= 1040) {
+      setShowAll(false);
+    }
+  }, [width]);
+
   if (!relatedVideos) {
     return (
       <div className="recommendation">
@@ -18,10 +30,20 @@ const RelatedVideo = ({ relatedVideos, width }) => {
     return null;
   }
 
+  // Determine which videos to show
+  const isMobileLayout = width < 1040;
+  const videosToShow =
+    isMobileLayout && !showAll
+      ? relatedVideos.slice(0, INITIAL_DISPLAY_COUNT)
+      : relatedVideos;
+
+  const hasMoreToShow =
+    isMobileLayout && !showAll && relatedVideos.length > INITIAL_DISPLAY_COUNT;
+
   return (
     <>
       <div className="recommendation">
-        {relatedVideos.map((item) => (
+        {videosToShow.map((item) => (
           <Link
             to={`/video/${item?.snippet?.categoryId}/${item?.id}`}
             className="rec-card"
@@ -53,9 +75,13 @@ const RelatedVideo = ({ relatedVideos, width }) => {
           </Link>
         ))}
       </div>
-      <div className="show-more">
-        <button type="button">Show more</button>
-      </div>
+      {hasMoreToShow && (
+        <div className="show-more">
+          <button type="button" onClick={() => setShowAll(true)}>
+            Show more
+          </button>
+        </div>
+      )}
     </>
   );
 };

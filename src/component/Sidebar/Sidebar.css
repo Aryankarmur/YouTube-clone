@@ -23,15 +23,13 @@
   transition: all 0.2s ease;
 }
 
-/* Expanded state: full width, z-index 0 so content flows beside it */
+/* Expanded state: full width */
 .sidebar-expanded {
-  z-index: 0;
   transition: all 0.2s ease;
 }
 
 /* Collapsed state: mini sidebar with icons only */
 .sidebar-collapsed {
-  z-index: 0;
   overflow-x: hidden;
   width: 60px;
   padding-left: 12.5px;

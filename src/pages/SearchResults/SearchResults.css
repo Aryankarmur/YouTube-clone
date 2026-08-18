@@ -1,7 +1,18 @@
 .search-results-page {
   max-width: 900px;
-  margin: 0 auto;
   padding: 20px 24px 40px;
+  transition: margin-left 0.2s ease;
+}
+
+/* Sidebar-aware margin — matches Home.css pattern */
+.search-sidebar-expanded {
+  margin-left: 174.44px;
+}
+.search-sidebar-collapsed {
+  margin-left: 60px;
+}
+.search-sidebar-hidden {
+  margin-left: 0;
 }
 
 .search-results-heading {
@@ -98,8 +109,13 @@
   min-height: 60px;
 }
 
-/* Responsive: stack cards vertically on smaller screens */
-@media (max-width: 700px) {
+/* Mobile: sidebar overlays, content always full width */
+@media (max-width: 768px) {
+  .search-sidebar-expanded,
+  .search-sidebar-collapsed {
+    margin-left: 0;
+  }
+
   .search-results-page {
     padding: 12px 12px 30px;
   }

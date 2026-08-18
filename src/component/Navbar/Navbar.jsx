@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Navbar.css";
 import profile_image from "../../assets/jack.png";
 import { IoMdMenu } from "react-icons/io";
-import { IoMicOutline, IoSearch, IoCloseOutline } from "react-icons/io5";
+import { IoMicOutline, IoSearch, IoCloseOutline, IoArrowBack } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
 import { useSidebar } from "../../context/SidebarContext";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -19,7 +19,9 @@ const Navbar = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestionsLoading, setSuggestionsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const searchBoxRef = useRef(null);
+  const mobileInputRef = useRef(null);
   const abortRef = useRef(null);
 
   const debouncedQuery = useDebounce(searchInput, 400);
@@ -54,13 +56,14 @@ const Navbar = () => {
     return () => controller.abort();
   }, [debouncedQuery]);
 
-  // Submit search
+  // Submit search — shared handler for desktop + mobile, icon + enter
   const handleSearchSubmit = useCallback(
     (query) => {
       const q = (query || searchInput).trim();
       if (!q) return;
       setShowSuggestions(false);
       setSuggestions([]);
+      setMobileSearchOpen(false);
       navigate(`/search?q=${encodeURIComponent(q)}`);
     },
     [searchInput, navigate],
@@ -72,6 +75,7 @@ const Navbar = () => {
       setSearchInput(title);
       setShowSuggestions(false);
       setSuggestions([]);
+      setMobileSearchOpen(false);
       navigate(`/search?q=${encodeURIComponent(title)}`);
     },
     [navigate],
@@ -99,9 +103,12 @@ const Navbar = () => {
         );
       } else if (e.key === "Escape") {
         setShowSuggestions(false);
+        if (mobileSearchOpen) {
+          setMobileSearchOpen(false);
+        }
       }
     },
-    [activeIndex, suggestions, handleSearchSubmit, handleSelectSuggestion],
+    [activeIndex, suggestions, handleSearchSubmit, handleSelectSuggestion, mobileSearchOpen],
   );
 
   // Reset active index when suggestions change
@@ -120,8 +127,73 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Auto-focus mobile search input when opened
+  useEffect(() => {
+    if (mobileSearchOpen && mobileInputRef.current) {
+      mobileInputRef.current.focus();
+    }
+  }, [mobileSearchOpen]);
+
   return (
     <nav className="flex-div" role="navigation" aria-label="Main navigation">
+      {/* Mobile search overlay */}
+      {mobileSearchOpen && (
+        <div className="mobile-search-overlay" ref={searchBoxRef}>
+          <button
+            className="mobile-search-back"
+            onClick={() => setMobileSearchOpen(false)}
+            type="button"
+            aria-label="Close search"
+          >
+            <IoArrowBack />
+          </button>
+          <div className="mobile-search-box">
+            <input
+              ref={mobileInputRef}
+              type="text"
+              placeholder="Search"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+                setShowSuggestions(true);
+              }}
+              onKeyDown={handleKeyDown}
+              autoComplete="off"
+            />
+            {searchInput && (
+              <button
+                className="search-clear-btn"
+                onClick={() => {
+                  setSearchInput("");
+                  setSuggestions([]);
+                  setShowSuggestions(false);
+                  mobileInputRef.current?.focus();
+                }}
+                type="button"
+                aria-label="Clear search"
+              >
+                <IoCloseOutline />
+              </button>
+            )}
+            <button
+              className="mobile-search-submit"
+              onClick={() => handleSearchSubmit()}
+              type="button"
+              aria-label="Search"
+            >
+              <IoSearch />
+            </button>
+          </div>
+          <SearchSuggestions
+            suggestions={suggestions}
+            loading={suggestionsLoading}
+            visible={showSuggestions && searchInput.trim().length >= 2}
+            onSelect={handleSelectSuggestion}
+            activeIndex={activeIndex}
+          />
+        </div>
+      )}
+
       <div className="nav-left flex-div">
         <button
           className="menu-icon"
@@ -160,13 +232,13 @@ const Navbar = () => {
           </svg>
         </Link>
       </div>
-      <div className="nav-middle flex-div" ref={searchBoxRef}>
+      <div className="nav-middle flex-div" ref={!mobileSearchOpen ? searchBoxRef : undefined}>
         <div className="search-box flex-div">
           <label htmlFor="search-input" className="sr-only">
             Search
           </label>
           <input
-            type="search"
+            type="text"
             name="search"
             id="search-input"
             placeholder="Search"
@@ -234,6 +306,7 @@ const Navbar = () => {
             title="Search"
             type="button"
             aria-label="Search"
+            onClick={() => setMobileSearchOpen(true)}
           >
             <IoSearch />
           </button>

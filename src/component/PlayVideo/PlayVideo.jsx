@@ -15,10 +15,8 @@ const PlayVideo = ({ width, videoData, videoId, channelData }) => {
   return (
     <div className="play-video">
       <div className="video-details">
-        <div className="video-div">
+        <div className="video-player-container">
           <iframe
-            width="859"
-            height="483"
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -83,22 +81,19 @@ const PlayVideo = ({ width, videoData, videoId, channelData }) => {
               {moment(videoData?.snippet?.publishedAt).fromNow()}
             </span>{" "}
           </p>
-          <div className="description">
-            <span>
-              {showMore
-                ? videoData?.snippet?.description
-                : videoData?.snippet?.description?.slice(0, 250)}
+          <div className={`description ${showMore ? "description-expanded" : "description-collapsed"}`}>
+            <span className="description-text">
+              {videoData?.snippet?.description}
             </span>
-            <br />
-            <button
-              className="more"
-              onClick={() => setShowMore((prev) => !prev)}
-              type="button"
-              aria-expanded={showMore}
-            >
-              {showMore ? "Show less" : "...more"}
-            </button>
           </div>
+          <button
+            className="more"
+            onClick={() => setShowMore((prev) => !prev)}
+            type="button"
+            aria-expanded={showMore}
+          >
+            {showMore ? "Show less" : "...more"}
+          </button>
         </div>
       </div>
       {width >= 1040 ? (

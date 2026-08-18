@@ -4,6 +4,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { useSEO } from "../../hooks/useSEO";
+import { useSidebar } from "../../context/SidebarContext";
 import LoadingSpinner from "../../component/LoadingSpinner/LoadingSpinner";
 import ErrorMessage from "../../component/ErrorMessage/ErrorMessage";
 import EmptyState from "../../component/EmptyState/EmptyState";
@@ -14,6 +15,7 @@ const SearchResults = () => {
   const query = searchParams.get("q") || "";
   const { results, loading, loadingMore, error, hasMore, search, loadMore } =
     useSearch();
+  const { sidebarState } = useSidebar();
 
   useSEO({
     title: query ? `Search results for "${query}"` : "Search",
@@ -34,6 +36,16 @@ const SearchResults = () => {
     hasMore,
     loading: loading || loadingMore,
   });
+
+  // Determine sidebar-aware layout class
+  let layoutClass = "";
+  if (sidebarState === "expanded") {
+    layoutClass = "search-sidebar-expanded";
+  } else if (sidebarState === "collapsed") {
+    layoutClass = "search-sidebar-collapsed";
+  } else {
+    layoutClass = "search-sidebar-hidden";
+  }
 
   if (loading) {
     return <LoadingSpinner fullPage message="Searching..." />;
@@ -64,7 +76,7 @@ const SearchResults = () => {
   }
 
   return (
-    <div className="search-results-page">
+    <div className={`search-results-page ${layoutClass}`}>
       <h1 className="search-results-heading">
         Search results for &ldquo;{query}&rdquo;
       </h1>
