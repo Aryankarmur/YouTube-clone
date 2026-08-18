@@ -1,7 +1,7 @@
 import React from "react";
 import "./Sidebar.css";
+import { Link } from "react-router-dom";
 
-import menu_icon from "../../assets/menu.png";
 import home from "../../assets/home.png";
 import game_icon from "../../assets/game_icon.png";
 import automobiles from "../../assets/automobiles.png";
@@ -16,33 +16,49 @@ import simon from "../../assets/simon.png";
 import tom from "../../assets/tom.png";
 import megan from "../../assets/megan.png";
 import cameron from "../../assets/cameron.png";
-import { useLocation } from "react-router-dom";
+import { IoMdMenu } from "react-icons/io";
+import { useSidebar } from "../../context/SidebarContext";
 
-const Sidebar = ({ sidebar, setSidebar, sidebarClass, iconStyle }) => {
+const Sidebar = ({ category, setCategory }) => {
+  const { sidebarState, toggleSidebar } = useSidebar();
+
+  // Map sidebar state to CSS class
+  let sidebarClass = "";
+  if (sidebarState === "expanded") {
+    sidebarClass = "sidebar-expanded";
+  } else if (sidebarState === "collapsed") {
+    sidebarClass = "sidebar-collapsed";
+  } else {
+    sidebarClass = "sidebar-hidden";
+  }
+
+  const iconStyle =
+    sidebarState === "collapsed" ? "side-link-mini" : "side-link";
+
   return (
-    <aside className={`sidebar ${sidebarClass}`}>
+    <aside
+      className={`sidebar ${sidebarClass}`}
+      role="complementary"
+      aria-label="Sidebar navigation"
+    >
       <div className="nav-left flex-div">
-        <img
-          src={menu_icon}
-          alt="menu icon image"
+        <button
           className="menu-icon"
-          onClick={() => setSidebar((prev) => (prev === false ? true : false))}
-        />
-        <div className="logo">
+          onClick={toggleSidebar}
+          aria-label="Toggle sidebar"
+          type="button"
+        >
+          <IoMdMenu />
+        </button>
+        <Link to="/" aria-label="YouTube Home">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            id="yt-ringo2-svg_yt9"
+            id="yt-ringo2-svg_sidebar"
             width="93"
             height="20"
             viewBox="0 0 93 20"
             focusable="false"
             aria-hidden="true"
-            style={{
-              pointerEvents: "none",
-              display: "inline-block",
-              // width: "100%",
-              // height: "100%",
-            }}
           >
             <g>
               <path
@@ -51,7 +67,7 @@ const Sidebar = ({ sidebar, setSidebar, sidebarClass, iconStyle }) => {
               ></path>
               <path d="M19 10L11.5 5.75V14.25L19 10Z" fill="white"></path>
             </g>
-            <g id="youtube-paths_yt9">
+            <g id="youtube-paths_sidebar">
               <path d="M37.1384 18.8999V13.4399L40.6084 2.09994H38.0184L36.6984 7.24994C36.3984 8.42994 36.1284 9.65994 35.9284 10.7999H35.7684C35.6584 9.79994 35.3384 8.48994 35.0184 7.22994L33.7384 2.09994H31.1484L34.5684 13.4399V18.8999H37.1384Z"></path>
               <path d="M44.1003 6.29994C41.0703 6.29994 40.0303 8.04994 40.0303 11.8199V13.6099C40.0303 16.9899 40.6803 19.1099 44.0403 19.1099C47.3503 19.1099 48.0603 17.0899 48.0603 13.6099V11.8199C48.0603 8.44994 47.3803 6.29994 44.1003 6.29994ZM45.3903 14.7199C45.3903 16.3599 45.1003 17.3899 44.0503 17.3899C43.0203 17.3899 42.7303 16.3499 42.7303 14.7199V10.6799C42.7303 9.27994 42.9303 8.02994 44.0503 8.02994C45.2303 8.02994 45.3903 9.34994 45.3903 10.6799V14.7199Z"></path>
               <path d="M52.2713 19.0899C53.7313 19.0899 54.6413 18.4799 55.3913 17.3799H55.5013L55.6113 18.8999H57.6012V6.53994H54.9613V16.4699C54.6812 16.9599 54.0312 17.3199 53.4212 17.3199C52.6512 17.3199 52.4113 16.7099 52.4113 15.6899V6.53994H49.7812V15.8099C49.7812 17.8199 50.3613 19.0899 52.2713 19.0899Z"></path>
@@ -61,43 +77,97 @@ const Sidebar = ({ sidebar, setSidebar, sidebarClass, iconStyle }) => {
               <path d="M92.6517 11.4999C92.6517 8.51994 92.3517 6.30994 88.9217 6.30994C85.6917 6.30994 84.9717 8.45994 84.9717 11.6199V13.7899C84.9717 16.8699 85.6317 19.1099 88.8417 19.1099C91.3817 19.1099 92.6917 17.8399 92.5417 15.3799L90.2917 15.2599C90.2617 16.7799 89.9117 17.3999 88.9017 17.3999C87.6317 17.3999 87.5717 16.1899 87.5717 14.3899V13.5499H92.6517V11.4999ZM88.8617 7.96994C90.0817 7.96994 90.1717 9.11994 90.1717 11.0699V12.0799H87.5717V11.0699C87.5717 9.13994 87.6517 7.96994 88.8617 7.96994Z"></path>
             </g>
           </svg>
-        </div>
+        </Link>
       </div>
       <div className="shortcut-links">
-        <div className={iconStyle}>
-          <img src={home} alt="home icon" />
+        <div
+          className={`${iconStyle} ${category === 0 ? "active" : ""}`}
+          onClick={() => setCategory(0)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(0)}
+        >
+          <img src={home} alt="Home" />
           <p>Home</p>
         </div>
-        <div className={iconStyle}>
-          <img src={game_icon} alt="game icon" />
+        <div
+          className={`${iconStyle} ${category === 20 ? "active" : ""}`}
+          onClick={() => setCategory(20)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(20)}
+        >
+          <img src={game_icon} alt="Gaming" />
           <p>Gaming</p>
         </div>
-        <div className={iconStyle}>
-          <img src={automobiles} alt="automobiles icon" />
+        <div
+          className={`${iconStyle} ${category === 2 ? "active" : ""}`}
+          onClick={() => setCategory(2)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(2)}
+        >
+          <img src={automobiles} alt="Automobiles" />
           <p>Automobiles</p>
         </div>
-        <div className={iconStyle}>
-          <img src={sports} alt="sports icon" />
+        <div
+          className={`${iconStyle} ${category === 17 ? "active" : ""}`}
+          onClick={() => setCategory(17)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(17)}
+        >
+          <img src={sports} alt="Sports" />
           <p>Sports</p>
         </div>
-        <div className={iconStyle}>
-          <img src={entertainment} alt="entertainment icon" />
+        <div
+          className={`${iconStyle} ${category === 24 ? "active" : ""}`}
+          onClick={() => setCategory(24)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(24)}
+        >
+          <img src={entertainment} alt="Entertainment" />
           <p>Entertainment</p>
         </div>
-        <div className={iconStyle}>
-          <img src={tech} alt="tech icon" />
+        <div
+          className={`${iconStyle} ${category === 28 ? "active" : ""}`}
+          onClick={() => setCategory(28)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(28)}
+        >
+          <img src={tech} alt="Technology" />
           <p>Technology</p>
         </div>
-        <div className={iconStyle}>
-          <img src={music} alt="music icon" />
+        <div
+          className={`${iconStyle} ${category === 10 ? "active" : ""}`}
+          onClick={() => setCategory(10)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(10)}
+        >
+          <img src={music} alt="Music" />
           <p>Music</p>
         </div>
-        <div className={iconStyle}>
-          <img src={blogs} alt="blogs icon" />
+        <div
+          className={`${iconStyle} ${category === 22 ? "active" : ""}`}
+          onClick={() => setCategory(22)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(22)}
+        >
+          <img src={blogs} alt="Blogs" />
           <p>Blogs</p>
         </div>
-        <div className={iconStyle}>
-          <img src={news} alt="news icon" />
+        <div
+          className={`${iconStyle} ${category === 25 ? "active" : ""}`}
+          onClick={() => setCategory(25)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setCategory(25)}
+        >
+          <img src={news} alt="News" />
           <p>News</p>
         </div>
         <hr />
@@ -105,23 +175,23 @@ const Sidebar = ({ sidebar, setSidebar, sidebarClass, iconStyle }) => {
       <div className="subscribed-list">
         <h3 className="h3">Subscriptions</h3>
         <div className={iconStyle}>
-          <img src={jack} alt="jack image" />
+          <img src={jack} alt="PewDiePie channel" />
           <p>PewDiePie</p>
         </div>
         <div className={iconStyle}>
-          <img src={simon} alt="simon image" />
+          <img src={simon} alt="simonGaja channel" />
           <p>simonGaja</p>
         </div>
         <div className={iconStyle}>
-          <img src={tom} alt="tom image" />
+          <img src={tom} alt="KurosawEdit channel" />
           <p>KurosawEdit</p>
         </div>
         <div className={iconStyle}>
-          <img src={megan} alt="megan image" />
+          <img src={megan} alt="meganEdits channel" />
           <p>meganEdits</p>
         </div>
         <div className={iconStyle}>
-          <img src={cameron} alt="jack image" />
+          <img src={cameron} alt="News Daily channel" />
           <p>News Daily</p>
         </div>
       </div>

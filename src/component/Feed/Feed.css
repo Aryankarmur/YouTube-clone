@@ -34,3 +34,10 @@
     color: #606060;
 }
 
+.feed-sentinel {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 60px;
+    width: 100%;
+}

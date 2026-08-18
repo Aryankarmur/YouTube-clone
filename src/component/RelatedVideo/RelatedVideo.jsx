@@ -1,277 +1,60 @@
 import React from "react";
 import "./RelatedVideo.css";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import { valueConverter } from "../../utils/helper";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-import thumbnail1 from "../../assets/thumbnail1.png";
-import thumbnail2 from "../../assets/thumbnail2.png";
-import thumbnail3 from "../../assets/thumbnail3.png";
-import thumbnail4 from "../../assets/thumbnail4.png";
-import thumbnail5 from "../../assets/thumbnail5.png";
-import thumbnail6 from "../../assets/thumbnail6.png";
-import thumbnail7 from "../../assets/thumbnail7.png";
-import thumbnail8 from "../../assets/thumbnail8.png";
+const RelatedVideo = ({ relatedVideos, width }) => {
+  if (!relatedVideos) {
+    return (
+      <div className="recommendation">
+        <LoadingSpinner size="small" message="Loading related videos..." />
+      </div>
+    );
+  }
 
-const RelatedVideo = () => {
+  if (relatedVideos.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <div className="recommendation">
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        {/* extra */}
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur .</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-        <div className="rec-card">
-          <img src={thumbnail1} alt="" />
-          <div className="details">
-            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h3>
-            <p className="channel-name">john doe</p>
-            <p className="view-detail">
-              {" "}
-              <span>23K views</span>
-              <span>28 hr ago</span>{" "}
-            </p>
-          </div>
-        </div>
-
-        {/* end */}
+        {relatedVideos.map((item) => (
+          <Link
+            to={`/video/${item?.snippet?.categoryId}/${item?.id}`}
+            className="rec-card"
+            key={item?.id}
+          >
+            <img
+              src={item?.snippet?.thumbnails?.medium?.url}
+              alt={item?.snippet?.localized?.title || "Related video thumbnail"}
+              loading="lazy"
+            />
+            <div className="details">
+              <h3>
+                {width < 1040
+                  ? item?.snippet?.localized?.title?.length > 70
+                    ? item.snippet.localized.title.slice(0, 70) + "..."
+                    : item?.snippet?.localized?.title
+                  : item?.snippet?.localized?.title?.length > 27
+                    ? item.snippet.localized.title.slice(0, 27) + "..."
+                    : item?.snippet?.localized?.title}
+              </h3>
+              <p className="channel-name">{item?.snippet?.channelTitle}</p>
+              <p className="view-detail">
+                <span>
+                  {valueConverter(item?.statistics?.viewCount)} views
+                </span>
+                <span>{moment(item?.snippet?.publishedAt).fromNow()}</span>
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
       <div className="show-more">
-        <button>Show more</button>
+        <button type="button">Show more</button>
       </div>
     </>
   );

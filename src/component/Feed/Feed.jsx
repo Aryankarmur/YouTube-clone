@@ -1,242 +1,75 @@
 import React from "react";
 import "./Feed.css";
-
-import thumbnail1 from "../../assets/thumbnail1.png";
-import thumbnail2 from "../../assets/thumbnail2.png";
-import thumbnail3 from "../../assets/thumbnail3.png";
-import thumbnail4 from "../../assets/thumbnail4.png";
-import thumbnail5 from "../../assets/thumbnail5.png";
-import thumbnail6 from "../../assets/thumbnail6.png";
-import thumbnail7 from "../../assets/thumbnail7.png";
-import thumbnail8 from "../../assets/thumbnail8.png";
 import { Link } from "react-router-dom";
+import { valueConverter } from "../../utils/helper";
+import moment from "moment";
+import { useYouTubeVideos } from "../../hooks/useYouTubeVideos";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import EmptyState from "../EmptyState/EmptyState";
 
-const Feed = () => {
+const Feed = ({ category }) => {
+  const { videos, loading, loadingMore, error, hasMore, loadMore, retry } =
+    useYouTubeVideos(category);
+
+  const sentinelRef = useInfiniteScroll({
+    onLoadMore: loadMore,
+    hasMore,
+    loading: loading || loadingMore,
+  });
+
+  if (loading) {
+    return <LoadingSpinner fullPage message="Loading videos..." />;
+  }
+
+  if (error) {
+    return <ErrorMessage error={error} onRetry={retry} fullPage />;
+  }
+
+  if (videos.length === 0) {
+    return <EmptyState message="No videos found for this category." />;
+  }
+
   return (
-    <div className="feed">
-      <Link to={"/video/20/shuw3448"} className="card">
-        <div className="img-div">
-          <img src={thumbnail1} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </Link>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail2} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
+    <>
+      <div className="feed">
+        {videos.map((item) => (
+          <Link
+            to={`/video/${item?.snippet?.categoryId}/${item?.id}`}
+            className="card"
+            key={item?.id}
+          >
+            <div className="img-div">
+              <img
+                src={item?.snippet?.thumbnails?.medium?.url}
+                alt={item?.snippet?.title || "Video thumbnail"}
+                loading="lazy"
+              />
+            </div>
+            <div className="detail-div">
+              <h2>
+                {item?.snippet?.title?.length > 70
+                  ? `${item.snippet.title.slice(0, 70)}...`
+                  : item?.snippet?.title}
+              </h2>
+              <h3>{item?.snippet?.channelTitle}</h3>
+              <p>
+                {valueConverter(item?.statistics?.viewCount)} views &bull;{" "}
+                {moment(item?.snippet?.publishedAt).fromNow()}
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
 
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail3} alt="" />
+      {/* Sentinel for infinite scroll */}
+      {hasMore && (
+        <div ref={sentinelRef} className="feed-sentinel">
+          {loadingMore && <LoadingSpinner size="small" />}
         </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail4} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail5} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail6} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail7} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail8} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-      {/* extra div */}
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail1} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail2} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail3} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail4} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail5} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail6} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail7} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-
-      <div className="card">
-        <div className="img-div">
-          <img src={thumbnail8} alt="" />
-        </div>
-        <div className="detail-div">
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            voluptatibus?
-          </h2>
-          <h3>channel name</h3>
-          <p>12K views &bull; 20 days ago</p>
-        </div>
-      </div>
-      {/* extra div */}
-    </div>
+      )}
+    </>
   );
 };
 

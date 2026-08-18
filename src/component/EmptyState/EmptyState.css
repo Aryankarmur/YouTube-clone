@@ -1,0 +1,22 @@
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  width: 100%;
+  text-align: center;
+  min-height: 40vh;
+}
+
+.empty-state-icon {
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.empty-state-message {
+  font-size: 15px;
+  color: #606060;
+  line-height: 1.5;
+  max-width: 360px;
+}

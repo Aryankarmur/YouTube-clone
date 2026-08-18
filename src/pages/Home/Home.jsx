@@ -1,14 +1,31 @@
-import React from 'react'
-import "./Home.css"
-import Feed from '../../component/Feed/Feed';
+import React from "react";
+import "./Home.css";
+import Feed from "../../component/Feed/Feed";
+import { useSidebar } from "../../context/SidebarContext";
+import { useSEO } from "../../hooks/useSEO";
 
-const Home = ({sidebar}) => {
-  const homeMain_class = sidebar?"home-mini":"home-max";
+const Home = ({ category }) => {
+  const { sidebarState } = useSidebar();
+
+  useSEO({
+    title: null, // Use default "YouTube" title
+    description: "Watch trending and popular videos on YouTube",
+  });
+
+  let homeMainClass = "";
+  if (sidebarState === "expanded") {
+    homeMainClass = "home-sidebar-expanded";
+  } else if (sidebarState === "collapsed") {
+    homeMainClass = "home-sidebar-collapsed";
+  } else {
+    homeMainClass = "home-sidebar-hidden";
+  }
+
   return (
-    <div className={`home-main ${homeMain_class}`}>
-      <Feed/>
-    </div>
-  )
-}
+    <main className={`home-main ${homeMainClass}`}>
+      <Feed category={category} />
+    </main>
+  );
+};
 
-export default Home
+export default Home;
