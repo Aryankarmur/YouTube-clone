@@ -12,9 +12,7 @@
  *   3. Daily quota limit
  */
 
-const API_BASE_URL =
-  import.meta.env.VITE_YOUTUBE_API_BASE_URL ||
-  "https://www.googleapis.com/youtube/v3";
+const API_BASE_URL = import.meta.env.VITE_YOUTUBE_API_BASE_URL;
 
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
@@ -209,10 +207,7 @@ export async function searchVideos({
  */
 export async function getVideoById(videoId, signal) {
   if (!videoId) {
-    throw new YouTubeApiError(
-      "invalidRequest",
-      "Video ID is required.",
-    );
+    throw new YouTubeApiError("invalidRequest", "Video ID is required.");
   }
 
   const data = await apiRequest(
