@@ -30,6 +30,7 @@
 
 /* Collapsed state: mini sidebar with icons only */
 .sidebar-collapsed {
+  z-index: 0;
   overflow-x: hidden;
   width: 60px;
   padding-left: 12.5px;
