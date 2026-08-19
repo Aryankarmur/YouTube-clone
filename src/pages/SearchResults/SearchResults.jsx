@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./SearchResults.css";
 import { useSearchParams, Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";

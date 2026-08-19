@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import Navbar from "./component/Navbar/Navbar";
 import Sidebar from "./component/Sidebar/Sidebar";
 import { Route, Routes } from "react-router-dom";

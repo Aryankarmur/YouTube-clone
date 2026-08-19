@@ -1,4 +1,3 @@
-import React from "react";
 import "./Feed.css";
 import { Link } from "react-router-dom";
 import { valueConverter } from "../../utils/helper";

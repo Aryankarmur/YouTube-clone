@@ -16,9 +16,9 @@ import { useEffect } from "react";
 export function useSEO({ title, description } = {}) {
   useEffect(() => {
     if (title) {
-      document.title = `${title} — YouTube`;
+      document.title = `${title} — YWatch`;
     } else {
-      document.title = "YouTube";
+      document.title = "YWatch";
     }
   }, [title]);
 

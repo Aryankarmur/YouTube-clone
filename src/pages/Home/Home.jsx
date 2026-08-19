@@ -1,4 +1,3 @@
-import React from "react";
 import "./Home.css";
 import Feed from "../../component/Feed/Feed";
 import { useSidebar } from "../../context/SidebarContext";

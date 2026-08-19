@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./PlayVideo.css";
 import like from "../../assets/like.png";
 import dislike from "../../assets/dislike.png";

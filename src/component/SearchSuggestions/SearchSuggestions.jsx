@@ -1,4 +1,3 @@
-import React from "react";
 import "./SearchSuggestions.css";
 import { IoSearch } from "react-icons/io5";
 

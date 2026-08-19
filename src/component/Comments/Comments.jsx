@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./Comments.css";
 import user_profile from "../../assets/user_profile.jpg";
 import like from "../../assets/like.png";
