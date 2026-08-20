@@ -3,15 +3,21 @@ import "./Navbar.css";
 import profile_image from "../../assets/jack.png";
 import { IoMdMenu } from "react-icons/io";
 import { IoMicOutline, IoSearch, IoCloseOutline, IoArrowBack } from "react-icons/io5";
+import { IoAddCircleOutline, IoNotificationsOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
 import { useSidebar } from "../../context/SidebarContext";
 import { useDebounce } from "../../hooks/useDebounce";
 import { getSearchSuggestions } from "../../api/youtubeApi";
 import SearchSuggestions from "../SearchSuggestions/SearchSuggestions";
+import { useWindowSize } from "../../hooks/useWindowSize";
+
+const MOBILE_BREAKPOINT = 768;
 
 const Navbar = () => {
   const { toggleSidebar } = useSidebar();
   const navigate = useNavigate();
+  const { width } = useWindowSize();
+  const isMobile = width <= MOBILE_BREAKPOINT;
 
   // Search state
   const [searchInput, setSearchInput] = useState("");
@@ -23,6 +29,10 @@ const Navbar = () => {
   const searchBoxRef = useRef(null);
   const mobileInputRef = useRef(null);
   const abortRef = useRef(null);
+
+  // Profile dropdown state
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const profileRef = useRef(null);
 
   const debouncedQuery = useDebounce(searchInput, 400);
 
@@ -126,6 +136,29 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    if (!profileDropdownOpen) return;
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
+
+  // Close profile dropdown when switching to desktop
+  useEffect(() => {
+    if (!isMobile) {
+      setProfileDropdownOpen(false);
+    }
+  }, [isMobile]);
 
   // Auto-focus mobile search input when opened
   useEffect(() => {
@@ -311,10 +344,10 @@ const Navbar = () => {
             <IoMicOutline />
           </button>
         </div>
-        <button className="create-btn" type="button">+ Create</button>
-        <button className="create-btn-mini" title="Create" type="button">+</button>
+        <button className="create-btn nav-desktop-only" type="button">+ Create</button>
+        <button className="create-btn-mini nav-desktop-only" title="Create" type="button">+</button>
         <button
-          className="notification-btn"
+          className="notification-btn nav-desktop-only"
           title="Notifications"
           type="button"
           aria-label="Notifications"
@@ -330,7 +363,40 @@ const Navbar = () => {
             <path d="M16 19a4 4 0 11-8 0H4.765C3.21 19 2.25 17.304 3.05 15.97l1.806-3.01A1 1 0 005 12.446V8a7 7 0 0114 0v4.446c0 .181.05.36.142.515l1.807 3.01c.8 1.333-.161 3.029-1.716 3.029H16ZM12 3a5 5 0 00-5 5v4.446a3 3 0 01-.428 1.543L4.765 17h14.468l-1.805-3.01A3 3 0 0117 12.445V8a5 5 0 00-5-5Zm-2 16a2 2 0 104 0h-4Z"></path>
           </svg>
         </button>
-        <img src={profile_image} alt="User profile" className="user-icon" />
+        <div className="profile-wrapper" ref={profileRef}>
+          <button
+            className="profile-btn"
+            type="button"
+            aria-label="Profile menu"
+            aria-expanded={profileDropdownOpen}
+            aria-haspopup="true"
+            onClick={() => setProfileDropdownOpen((prev) => !prev)}
+          >
+            <img src={profile_image} alt="User profile" className="user-icon" />
+          </button>
+          {isMobile && profileDropdownOpen && (
+            <div className="profile-dropdown" role="menu">
+              <button
+                className="profile-dropdown-item"
+                type="button"
+                role="menuitem"
+                onClick={() => setProfileDropdownOpen(false)}
+              >
+                <IoAddCircleOutline className="profile-dropdown-icon" />
+                <span>Create</span>
+              </button>
+              <button
+                className="profile-dropdown-item"
+                type="button"
+                role="menuitem"
+                onClick={() => setProfileDropdownOpen(false)}
+              >
+                <IoNotificationsOutline className="profile-dropdown-icon" />
+                <span>Notifications</span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

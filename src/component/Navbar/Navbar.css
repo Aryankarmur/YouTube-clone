@@ -170,10 +170,89 @@ nav {
 
 .nav-right .user-icon {
   width: 35px;
+  height: 35px;
   border-radius: 50%;
+  object-fit: cover;
 }
 .search-mini {
   display: none;
+}
+
+/* Profile button wrapper */
+.profile-wrapper {
+  position: relative;
+}
+.profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease;
+}
+.profile-btn:hover {
+  opacity: 0.8;
+}
+.profile-btn:focus-visible {
+  outline: 2px solid #065fd4;
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+/* Profile dropdown — only visible on mobile via JS conditional rendering */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  padding: 8px 0;
+  animation: dropdownFadeIn 0.15s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  color: #0f0f0f;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+.profile-dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.profile-dropdown-item:focus-visible {
+  outline: 2px solid #065fd4;
+  outline-offset: -2px;
+}
+.profile-dropdown-icon {
+  font-size: 22px;
+  color: #606060;
+  flex-shrink: 0;
 }
 
 /* Visually hidden label for accessibility */
@@ -294,13 +373,46 @@ nav {
   box-shadow: none;
 }
 
+/* ============================================
+   RESPONSIVE: Tablet / Medium (≤ 1040px)
+   ============================================ */
+@media (max-width: 1040px) {
+  .nav-right .create-btn {
+    display: none;
+  }
+  .nav-right .create-btn-mini {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: Mobile (≤ 768px)
+   ============================================ */
 @media (max-width: 768px) {
+  nav {
+    padding: 8px 12px;
+  }
+
+  .nav-left {
+    margin-right: 0;
+  }
+  .nav-left .menu-icon {
+    margin-right: 8px;
+  }
+
   .nav-middle {
     display: none;
   }
   .search-mini {
     display: flex;
-    gap: 10px;
+    gap: 4px;
     font-size: 25px;
     cursor: pointer;
   }
@@ -317,17 +429,93 @@ nav {
   .search-mini .mic-btn:hover {
     background: rgba(0, 0, 0, 0.06);
   }
-  .nav-right .create-btn {
-    display: none;
+
+  /* Hide Create & Notification from navbar on mobile — accessible via profile dropdown */
+  .nav-right .nav-desktop-only {
+    display: none !important;
   }
-  .nav-right .create-btn-mini {
-    display: block;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 25px;
-    text-align: center;
-    font-size: 25px;
-    cursor: pointer;
+
+  .nav-right {
+    gap: 4px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: Small mobile (≤ 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  nav {
+    padding: 6px 8px;
+  }
+
+  .nav-left .menu-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    margin-right: 4px;
+  }
+
+  .nav-left svg {
+    width: 85px;
+    height: 17px;
+  }
+
+  .search-mini {
+    gap: 0;
+  }
+  .search-mini .search-icon,
+  .search-mini .mic-btn {
+    padding: 6px;
+    font-size: 22px;
+  }
+
+  .nav-right {
+    gap: 2px;
+  }
+
+  .nav-right .user-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profile-dropdown {
+    min-width: 180px;
+    right: -4px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: Extra small mobile (≤ 360px)
+   ============================================ */
+@media (max-width: 360px) {
+  nav {
+    padding: 5px 6px;
+  }
+
+  .nav-left .menu-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    margin-right: 2px;
+  }
+
+  .nav-left svg {
+    width: 75px;
+    height: 15px;
+  }
+
+  .search-mini .search-icon,
+  .search-mini .mic-btn {
+    padding: 5px;
+    font-size: 20px;
+  }
+
+  .nav-right .user-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .profile-dropdown {
+    min-width: 170px;
   }
 }

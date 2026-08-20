@@ -80,6 +80,7 @@
   gap: 8px;
   font-size: 12px;
   color: #606060;
+  flex-wrap: wrap;
 }
 
 .search-result-meta span::after {
@@ -109,7 +110,29 @@
   min-height: 60px;
 }
 
-/* Mobile: sidebar overlays, content always full width */
+/* ============================================
+   RESPONSIVE: Medium / Tablet (≤ 1040px)
+   Thumbnail gets narrower to give more room to details
+   ============================================ */
+@media (max-width: 1040px) {
+  .search-result-thumbnail {
+    width: 280px;
+  }
+
+  .search-result-title {
+    font-size: 16px;
+  }
+
+  .search-results-page {
+    padding: 16px 16px 30px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: Mobile (≤ 768px)
+   Sidebar overlays — content always full width
+   Cards stack vertically
+   ============================================ */
 @media (max-width: 768px) {
   .search-sidebar-expanded,
   .search-sidebar-collapsed {
@@ -135,5 +158,22 @@
 
   .search-result-description {
     display: none;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: Small mobile (≤ 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  .search-results-page {
+    padding: 10px 8px 24px;
+  }
+
+  .search-result-title {
+    font-size: 14px;
+  }
+
+  .search-result-meta {
+    font-size: 11px;
   }
 }

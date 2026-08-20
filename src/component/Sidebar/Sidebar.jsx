@@ -1,5 +1,6 @@
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 import home from "../../assets/home.png";
 import game_icon from "../../assets/game_icon.png";
@@ -20,6 +21,8 @@ import { useSidebar } from "../../context/SidebarContext";
 
 const Sidebar = ({ category, setCategory }) => {
   const { sidebarState, toggleSidebar } = useSidebar();
+  const { width } = useWindowSize();
+  const isMobile = width <= 768;
 
   // Map sidebar state to CSS class
   let sidebarClass = "";
@@ -35,6 +38,7 @@ const Sidebar = ({ category, setCategory }) => {
     sidebarState === "collapsed" ? "side-link-mini" : "side-link";
 
   return (
+    <>
     <aside
       className={`sidebar ${sidebarClass}`}
       role="complementary"
@@ -187,6 +191,15 @@ const Sidebar = ({ category, setCategory }) => {
         </div>
       </div>
     </aside>
+    {/* Mobile overlay backdrop */}
+    {isMobile && sidebarState === "expanded" && (
+      <div
+        className="sidebar-overlay"
+        onClick={toggleSidebar}
+        aria-hidden="true"
+      />
+    )}
+    </>
   );
 };
 

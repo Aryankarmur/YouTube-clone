@@ -1,10 +1,17 @@
-.video-container{
-    display: flex;
+.video-container {
+  display: flex;
+  padding: 0 16px;
 }
-
 
 @media (max-width: 1040px) {
-  .video-container{
+  .video-container {
     display: block;
+    padding: 0 10px;
+  }
 }
+
+@media (max-width: 480px) {
+  .video-container {
+    padding: 0 6px;
+  }
 }
