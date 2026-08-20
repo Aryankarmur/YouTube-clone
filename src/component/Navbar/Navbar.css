@@ -374,9 +374,9 @@ nav {
 }
 
 /* ============================================
-   RESPONSIVE: Tablet / Medium (≤ 1040px)
+   RESPONSIVE: Tablet / Medium (≤ 1023px)
    ============================================ */
-@media (max-width: 1040px) {
+@media (max-width: 1023px) {
   .nav-right .create-btn {
     display: none;
   }

@@ -10,10 +10,10 @@ const INITIAL_DISPLAY_COUNT = 8;
 const RelatedVideo = ({ relatedVideos, width }) => {
   const [showAll, setShowAll] = useState(false);
 
-  // Reset showAll when viewport crosses above 1040px
+  // Reset showAll when viewport crosses above 1023px
   // (desktop shows all videos by default in the sidebar layout)
   useEffect(() => {
-    if (width >= 1040) {
+    if (width >= 1023) {
       setShowAll(false);
     }
   }, [width]);
@@ -31,7 +31,7 @@ const RelatedVideo = ({ relatedVideos, width }) => {
   }
 
   // Determine which videos to show
-  const isMobileLayout = width < 1040;
+  const isMobileLayout = width < 1023;
   const videosToShow =
     isMobileLayout && !showAll
       ? relatedVideos.slice(0, INITIAL_DISPLAY_COUNT)
@@ -56,7 +56,7 @@ const RelatedVideo = ({ relatedVideos, width }) => {
             />
             <div className="details">
               <h3>
-                {width < 1040
+                {width < 1023
                   ? item?.snippet?.localized?.title?.length > 70
                     ? item.snippet.localized.title.slice(0, 70) + "..."
                     : item?.snippet?.localized?.title

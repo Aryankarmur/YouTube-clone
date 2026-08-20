@@ -96,7 +96,7 @@ const PlayVideo = ({ width, videoData, videoId, channelData }) => {
           </button>
         </div>
       </div>
-      {width >= 1040 ? (
+      {width >= 1023 ? (
         <Comments
           videoId={videoId}
           commentCount={videoData?.statistics?.commentCount}

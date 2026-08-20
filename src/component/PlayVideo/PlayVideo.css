@@ -181,9 +181,9 @@
 }
 
 /* ============================================
-   RESPONSIVE: ≤ 1040px — single column layout
+   RESPONSIVE: ≤ 1023px — single column layout
    ============================================ */
-@media (max-width: 1040px) {
+@media (max-width: 1023px) {
   .play-video {
     flex-basis: 100%;
     margin-left: 0;
@@ -220,6 +220,18 @@
   .video-details .other-detail .likes-share-details img {
     width: 17px;
     margin-right: 5px;
+  }
+
+  .video-details .other-detail .likes-share-details .likes-detail {
+    gap: 10px;
+  }
+
+  .video-details .other-detail .likes-share-details .likes-detail img:first-child {
+    margin-right: -6px;
+  }
+
+  .video-details .other-detail .likes-share-details .likes-detail hr {
+    height: 24px;
   }
 }
 
@@ -264,5 +276,17 @@
     padding: 8px;
     font-size: 13px;
     line-height: 20px;
+  }
+
+  .video-details .other-detail .likes-share-details .likes-detail {
+    gap: 8px;
+  }
+
+  .video-details .other-detail .likes-share-details .likes-detail img:first-child {
+    margin-right: -4px;
+  }
+
+  .video-details .other-detail .likes-share-details .likes-detail hr {
+    height: 20px;
   }
 }

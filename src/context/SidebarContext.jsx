@@ -14,12 +14,12 @@ import { useLocation } from "react-router-dom";
  *
  * Breakpoints (consistent with existing CSS):
  *   <= 768px   → mobile  (sidebar hidden by default)
- *   769-1040px → medium  (sidebar collapsed on home/search)
- *   > 1040px   → desktop (sidebar expanded on home/search)
+ *   769-1023px → medium  (sidebar collapsed on home/search)
+ *   > 1023px   → desktop (sidebar expanded on home/search)
  */
 
 const MOBILE_BREAKPOINT = 768;
-const DESKTOP_BREAKPOINT = 1040;
+const DESKTOP_BREAKPOINT = 1023;
 
 const SidebarContext = createContext(null);
 

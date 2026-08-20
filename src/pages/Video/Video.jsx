@@ -133,7 +133,7 @@ const Video = () => {
         channelData={channelData}
       />
       <RelatedVideo relatedVideos={relatedVideos} width={width} />
-      {width < 1040 ? (
+      {width < 1023 ? (
         <Comments
           videoId={videoId}
           commentCount={videoData?.statistics?.commentCount}

@@ -3,7 +3,7 @@
   padding: 0 16px;
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1023px) {
   .video-container {
     display: block;
     padding: 0 10px;

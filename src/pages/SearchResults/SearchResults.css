@@ -111,10 +111,10 @@
 }
 
 /* ============================================
-   RESPONSIVE: Medium / Tablet (≤ 1040px)
+   RESPONSIVE: Medium / Tablet (≤ 1023px)
    Thumbnail gets narrower to give more room to details
    ============================================ */
-@media (max-width: 1040px) {
+@media (max-width: 1023px) {
   .search-result-thumbnail {
     width: 280px;
   }
